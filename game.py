@@ -87,3 +87,59 @@ def singlegame(curplayer, chance):
             curplayer = 'O'
         else:
             curplayer = 'X'
+
+
+def myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2):
+    print("\t--------------------------------")
+    print("\t         SCORE BOARD       ")
+    print("\t--------------------------------")
+
+    listofplayers = list(scoreboard.keys())
+    print("\t   ", listofplayers[0], "\t    ", scoreboard[listofplayers[0]])
+    print("\t   ", listofplayers[1], "\t    ", scoreboard[listofplayers[1]])
+
+    print("\t--------------------------------\n")
+
+    opt = ['X', 'O']
+    # Loop for a series of Tic-Tac-Toe game
+    # The loop executes until the players quit
+    while flag:
+
+        # Conditions for player choice
+        if the_choice == 1:
+            playerchoice['X'] = curplayer
+            if curplayer == FirstPlayer:
+                playerchoice['O'] = SecondPlayer
+                return FirstPlayer + ' - X, ' + SecondPlayer + ' - O'
+            else:
+                playerchoice['O'] = FirstPlayer
+                return FirstPlayer + ' - O, ' + SecondPlayer + ' - X'
+
+        elif the_choice == 2:
+            playerchoice['O'] = curplayer
+            if curplayer == FirstPlayer:
+                playerchoice['X'] = SecondPlayer
+                return FirstPlayer + ' - O, ' + SecondPlayer + ' - X'
+            else:
+                playerchoice['X'] = FirstPlayer
+                return FirstPlayer + ' - X, ' + SecondPlayer + ' - O'
+
+        elif the_choice == 3:
+            print("The Final Scores")
+            flag = False
+            myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2)
+            return "The Final Scores"
+            break
+
+        else:
+            print("Invalid Selection!! Try Again\n")
+            return "Invalid Selection!! Try Again\n"
+
+        # Storing the winner in a single game of Tic-Tac-Toe
+        win = singlegame(opt[the_choice - 1], chance2)
+
+        # Updation of the scoreboard as per the winner
+        if win != 'D':
+            playerWon = playerchoice[win]
+            scoreboard[playerWon] = scoreboard[playerWon] + 1
+        myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2)
