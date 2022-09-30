@@ -1,5 +1,5 @@
 import unittest
-from game import mytictactoe, check_Tie
+from game import mytictactoe, check_Tie, check_Victory
 
 
 class PrimeNumbersTestCase(unittest.TestCase):
@@ -16,4 +16,12 @@ class PrimeNumbersTestCase(unittest.TestCase):
 
     def test_check_Tie2(self):
         result = check_Tie({'X': [1, 3, 5, 8], 'O': [2, 4, 6, 7]})
+        self.assertEqual(result, False)
+
+    def test_check_Victory1(self):
+        result = check_Victory({'X': [1, 2, 3], 'O': [4, 7, 9]}, 'X')
+        self.assertEqual(result, True)
+
+    def test_check_Victory2(self):
+        result = check_Victory({'X': [1, 3, 5, 8], 'O': [2, 4, 6, 7, 9]}, 'O')
         self.assertEqual(result, False)
