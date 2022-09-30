@@ -38,3 +38,52 @@ def check_Victory(playerpos, curplayer):
             return True
             # Return False if no combination is satisfied
     return False
+
+
+def singlegame(curplayer, chance):
+    # Representing the Tic-Tac-Toe
+    val = [' ' for i in range(9)]
+
+    # Storing the positions occupied by X and O
+    playerpos = {'X': [], 'O': []}
+
+    # Loop of Game for a single game of Tic-Tac-Toe
+    for i in range(len(chance)):
+        mytictactoe(val)
+
+        if chance[i] < 1 or chance[i] > 9:
+            print("Invalid Input!!! Try Again")
+            return "Invalid Input!!! Try Again"
+            continue
+
+        if val[chance[i] - 1] != ' ':
+            print("Oops! The Place is already occupied. Try again!!")
+            return "Oops! The Place is already occupied. Try again!!"
+            continue
+
+        # Updating the game information
+        # Update the status of the grid
+        val[chance[i] - 1] = curplayer
+
+        # Update the positions of the player
+        playerpos[curplayer].append(chance[i])
+
+        # Calling Function to check Victory
+        if check_Victory(playerpos, curplayer):
+            mytictactoe(val)
+            print("Congratulations! Player ", curplayer, " has won the game!")
+            print("\n")
+            return curplayer
+
+            # Calling Function to check Tie
+        if check_Tie(playerpos):
+            mytictactoe(val)
+            print("Oh! Game Tied")
+            print("\n")
+            return 'D'
+
+        # Switching moves of the player
+        if curplayer == 'X':
+            curplayer = 'O'
+        else:
+            curplayer = 'X'
