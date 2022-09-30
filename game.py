@@ -19,3 +19,9 @@ def mytictactoe(val):
         "\t_____|_____|_____\n\t     |     |\n\t  " + str(val[3]) + "  |  " + str(val[4]) + "  |  " + str(val[5]) + \
         "\n\t_____|_____|_____\n\t     |     |\n\t  " + str(val[6]) + "  |  " + str(val[7]) + "  |  " + str(val[8]) \
            + "\n\t     |     |\n"
+
+
+def check_Tie(playerpos):
+    if len(playerpos['X']) + len(playerpos['O']) == 9:
+        return True
+    return False
