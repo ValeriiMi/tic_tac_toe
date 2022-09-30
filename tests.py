@@ -1,5 +1,5 @@
 import unittest
-from game import mytictactoe, check_Tie, check_Victory, singlegame
+from game import mytictactoe, check_Tie, check_Victory, singlegame, myscoreboard
 
 
 class PrimeNumbersTestCase(unittest.TestCase):
@@ -41,3 +41,18 @@ class PrimeNumbersTestCase(unittest.TestCase):
     def test_singlegame4(self):
         result = singlegame('O', [2, 1, 4, 3, 6, 5, 7, 8, 9])
         self.assertEqual(result, "D")
+
+    def test_myscoreboard1(self):
+        result = myscoreboard({"Valeria": 0, "Slava": 0}, True, {'X': "", 'O': ""}, "Valeria", "Valeria", "Slava", 1,
+                              [1, 2, 3, 4])
+        self.assertEqual(result, "Valeria - X, Slava - O")
+
+    def test_myscoreboard2(self):
+        result = myscoreboard({"Valeria": 0, "Slava": 0}, True, {'X': "", 'O': ""}, "Valeria", "Valeria", "Slava", 2,
+                              [1, 2, 3, 4])
+        self.assertEqual(result, "Valeria - O, Slava - X")
+
+    def test_myscoreboar3(self):
+        result = myscoreboard({"Valeria": 0, "Slava": 0}, True, {'X': "", 'O': ""}, "Valeria", "Valeria", "Slava", 3,
+                              [1, 2, 3, 4])
+        self.assertEqual(result, "The Final Scores")
