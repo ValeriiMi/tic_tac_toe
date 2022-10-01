@@ -40,7 +40,7 @@ def check_Victory(playerpos, curplayer):
     return False
 
 
-def singlegame(curplayer, chance):
+def singlegame(curplayer):
     # Representing the Tic-Tac-Toe
     val = [' ' for i in range(9)]
 
@@ -48,25 +48,31 @@ def singlegame(curplayer, chance):
     playerpos = {'X': [], 'O': []}
 
     # Loop of Game for a single game of Tic-Tac-Toe
-    for i in range(len(chance)):
+    while True:
         mytictactoe(val)
 
-        if chance[i] < 1 or chance[i] > 9:
+        # Try-Exception block for CHANCE input
+        try:
+            print("Player ", curplayer, " turn. Choose your Block : ", end="")
+            chance = int(input())
+        except ValueError:
             print("Invalid Input!!! Try Again")
-            return "Invalid Input!!! Try Again"
             continue
 
-        if val[chance[i] - 1] != ' ':
+        if chance < 1 or chance > 9:
+            print("Invalid Input!!! Try Again")
+            continue
+
+        if val[chance - 1] != ' ':
             print("Oops! The Place is already occupied. Try again!!")
-            return "Oops! The Place is already occupied. Try again!!"
             continue
 
         # Updating the game information
         # Update the status of the grid
-        val[chance[i] - 1] = curplayer
+        val[chance - 1] = curplayer
 
         # Update the positions of the player
-        playerpos[curplayer].append(chance[i])
+        playerpos[curplayer].append(chance)
 
         # Calling Function to check Victory
         if check_Victory(playerpos, curplayer):
@@ -89,7 +95,7 @@ def singlegame(curplayer, chance):
             curplayer = 'X'
 
 
-def myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2):
+def myscoreboard(scoreboard, flag):
     print("\t--------------------------------")
     print("\t         SCORE BOARD       ")
     print("\t--------------------------------")
@@ -104,42 +110,71 @@ def myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondP
     # Loop for a series of Tic-Tac-Toe game
     # The loop executes until the players quit
     while flag:
+        # Main Menu for Players
+        print(curplayer, "will make the choice:")
+        print("Press 1 for X")
+        print("Press 2 for O")
+        print("Press 3 to Quit")
+
+        # Try exception for THE_CHOICE input
+        try:
+            the_choice = int(input())
+        except ValueError:
+            print("Invalid Input!!! Try Again\n")
+            continue
 
         # Conditions for player choice
         if the_choice == 1:
             playerchoice['X'] = curplayer
             if curplayer == FirstPlayer:
                 playerchoice['O'] = SecondPlayer
-                return FirstPlayer + ' - X, ' + SecondPlayer + ' - O'
             else:
                 playerchoice['O'] = FirstPlayer
-                return FirstPlayer + ' - O, ' + SecondPlayer + ' - X'
 
         elif the_choice == 2:
             playerchoice['O'] = curplayer
             if curplayer == FirstPlayer:
                 playerchoice['X'] = SecondPlayer
-                return FirstPlayer + ' - O, ' + SecondPlayer + ' - X'
             else:
                 playerchoice['X'] = FirstPlayer
-                return FirstPlayer + ' - X, ' + SecondPlayer + ' - O'
 
         elif the_choice == 3:
             print("The Final Scores")
             flag = False
-            myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2)
-            return "The Final Scores"
+            myscoreboard(scoreboard, flag)
             break
 
         else:
             print("Invalid Selection!! Try Again\n")
-            return "Invalid Selection!! Try Again\n"
 
         # Storing the winner in a single game of Tic-Tac-Toe
-        win = singlegame(opt[the_choice - 1], chance2)
+        win = singlegame(opt[the_choice - 1])
 
         # Updation of the scoreboard as per the winner
         if win != 'D':
             playerWon = playerchoice[win]
             scoreboard[playerWon] = scoreboard[playerWon] + 1
-        myscoreboard(scoreboard, flag, playerchoice, curplayer, FirstPlayer, SecondPlayer, the_choice, chance2)
+        myscoreboard(scoreboard, flag)
+
+
+if __name__ == "__main__":
+    print("First Player")
+    FirstPlayer = input("Specify the Name: ")
+    print("\n")
+
+    print("Second Player")
+    SecondPlayer = input("Specify the Name: ")
+    print("\n")
+
+    # Storing the player who chooses X and O
+    curplayer = FirstPlayer #
+
+    # Storing the Players' choice
+    playerchoice = {'X': "", 'O': ""}
+
+    # Storing the options
+    opt = ['X', 'O']
+    flag = True
+    # Storing the scoreboard
+    scoreboard = {FirstPlayer: 0, SecondPlayer: 0}
+    myscoreboard(scoreboard, flag)
